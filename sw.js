@@ -1,4 +1,4 @@
-const CACHE_NAME = "aplikasi-utama-v24";
+const CACHE_NAME = "aplikasi-utama-v25";
 const ASSETS = [
   "./",
   "./index.html",
