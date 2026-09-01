@@ -1,4 +1,4 @@
-const CACHE_NAME = "aplikasi-utama-v29";
+const CACHE_NAME = "aplikasi-utama-v30";
 const ASSETS = [
   "./",
   "./index.html",
@@ -12,8 +12,7 @@ const ASSETS = [
   "./images/cover.jpg",
   "./images/absen_logo.jpg",
   "./images/pengajuan_logo.jpg",
-  "./images/website_logo.jpg",
-  "https://cdn.tailwindcss.com"
+  "./images/website_logo.jpg"
 ];
 
 // Install Event - cache all core assets
@@ -22,7 +21,6 @@ self.addEventListener("install", (e) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log("[Service Worker] Caching core assets...");
-        // Use allSettled to ensure that even if one resource (like Tailwind CDN) fails during initial offline build, the rest get cached.
         return Promise.allSettled(
           ASSETS.map(asset => 
             cache.add(asset).catch(err => console.warn(`Failed to cache ${asset}:`, err))
@@ -59,7 +57,7 @@ self.addEventListener("fetch", (e) => {
     caches.match(e.request).then((cachedResponse) => {
       const fetchPromise = fetch(e.request)
         .then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
+          if (networkResponse && (networkResponse.status === 200 || networkResponse.type === 'opaque')) {
             const responseToCache = networkResponse.clone();
             caches.open(CACHE_NAME).then((cache) => {
               cache.put(e.request, responseToCache);

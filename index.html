@@ -38,6 +38,9 @@
       --sat: env(safe-area-inset-top, 0px);
       --sab: env(safe-area-inset-bottom, 0px);
     }
+    *, ::before, ::after {
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
@@ -48,6 +51,32 @@
     input, textarea, select {
       user-select: text;
       -webkit-user-select: text;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+    /* Logo Container safety rules (prevents raw unstyled giant images) */
+    .app-card-logo-container {
+      width: 80px !important;
+      height: 80px !important;
+      min-width: 80px !important;
+      min-height: 80px !important;
+      max-width: 80px !important;
+      max-height: 80px !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      margin: 8px auto 0 auto !important;
+    }
+    .app-card-logo-container img {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      border-radius: 50% !important;
     }
     /* Hide scrollbars */
     .no-scrollbar::-webkit-scrollbar {
@@ -89,7 +118,7 @@
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 w-full">
           <!-- Card 1: Absen Ustadz -->
           <div onclick="window.location.href = 'https://absen-xi-three.vercel.app/'" class="bg-white rounded-3xl p-4 border border-slate-200/60 shadow-sm flex flex-col items-center text-center hover:shadow-md hover:border-blue-200 transition cursor-pointer h-[260px] md:h-[280px] justify-between group w-full">
-            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-blue-500/5">
+            <div class="app-card-logo-container w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-blue-500/5">
               <img src="images/absen_logo.jpg" class="w-full h-full object-cover" alt="Absen Hibatullah Logo">
             </div>
             <div class="space-y-1">
@@ -104,7 +133,7 @@
 
           <!-- Card 2: Pengajuan Barang -->
           <div onclick="window.location.href = 'https://ajukan.vercel.app/'" class="bg-white rounded-3xl p-4 border border-slate-200/60 shadow-sm flex flex-col items-center text-center hover:shadow-md hover:border-orange-200 transition cursor-pointer h-[260px] md:h-[280px] justify-between group w-full">
-            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-orange-500/5">
+            <div class="app-card-logo-container w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-orange-500/5">
               <img src="images/pengajuan_logo.jpg" class="w-full h-full object-cover" alt="Pengajuan Barang Logo">
             </div>
             <div class="space-y-1">
@@ -119,7 +148,7 @@
 
           <!-- Card 5: Website Hibatullah -->
           <div onclick="window.location.href = 'https://hibatullah.sch.id/'" class="bg-white rounded-3xl p-4 border border-slate-200/60 shadow-sm flex flex-col items-center text-center hover:shadow-md hover:border-blue-200 transition cursor-pointer h-[260px] md:h-[280px] justify-between group w-full">
-            <div class="w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-blue-500/5">
+            <div class="app-card-logo-container w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden mt-2 shadow-md shadow-blue-500/5">
               <img src="images/website_logo.jpg" class="w-full h-full object-cover" alt="Website Hibatullah Logo">
             </div>
             <div class="space-y-1">
