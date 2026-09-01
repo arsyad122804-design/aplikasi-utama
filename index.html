@@ -12,11 +12,15 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/logo.png">
   
-  <!-- Apple Mobile Web App Meta Tags -->
+  <!-- Apple Mobile Web App & iPhone Meta Tags -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="apple-mobile-web-app-title" content="Hibatullah">
+  <meta name="apple-mobile-web-app-title" content="Hibatullah IIBS">
   <link class="apple-touch-icon" rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link class="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+  <link class="apple-touch-icon" rel="apple-touch-icon" sizes="192x192" href="icons/icon-192.png">
+  <link class="apple-touch-icon" rel="apple-touch-icon" sizes="512x512" href="icons/icon-512.png">
+  <meta name="format-detection" content="telephone=no">
   
   <!-- Google Fonts: Plus Jakarta Sans for premium modern UI -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,11 +31,16 @@
   <script src="https://cdn.tailwindcss.com"></script>
   
   <style>
+    :root {
+      --sat: env(safe-area-inset-top, 0px);
+      --sab: env(safe-area-inset-bottom, 0px);
+    }
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
       user-select: none;
       -webkit-user-select: none;
+      padding-top: env(safe-area-inset-top, 0px);
     }
     input, textarea, select {
       user-select: text;
@@ -261,23 +270,25 @@
   </div>
 
   <!-- ================= STICKY BOTTOM TAB NAVIGATION BAR (MOBILE ONLY) ================= -->
-  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 h-[68px] grid grid-cols-2 z-40 rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.03)]">
-    <button onclick="clickNav('home')" id="nav-home" class="flex flex-col items-center justify-center gap-1 group w-full h-full">
-      <svg class="w-[20px] h-[20px] text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
-      </svg>
-      <span class="text-[11px] font-bold text-blue-600 tracking-wider">Beranda</span>
-    </button>
+  <div class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 z-40 rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.03)]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+    <div class="h-[68px] grid grid-cols-2">
+      <button onclick="clickNav('home')" id="nav-home" class="flex flex-col items-center justify-center gap-1 group w-full h-full">
+        <svg class="w-[20px] h-[20px] text-blue-600 transition-colors" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span class="text-[11px] font-bold text-blue-600 tracking-wider">Beranda</span>
+      </button>
 
-    <button onclick="clickNav('akses')" id="nav-akses" class="flex flex-col items-center justify-center gap-1 group w-full h-full">
-      <svg class="w-[20px] h-[20px] text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-        <rect x="3" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="3" width="7" height="7" rx="1.5"/>
-        <rect x="3" y="14" width="7" height="7" rx="1.5"/>
-        <rect x="14" y="14" width="7" height="7" rx="1.5"/>
-      </svg>
-      <span class="text-[11px] font-bold text-slate-400 group-hover:text-slate-600 tracking-wider">Akses Cepat</span>
-    </button>
+      <button onclick="clickNav('akses')" id="nav-akses" class="flex flex-col items-center justify-center gap-1 group w-full h-full">
+        <svg class="w-[20px] h-[20px] text-slate-400 group-hover:text-slate-600 transition-colors" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/>
+          <rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        <span class="text-[11px] font-bold text-slate-400 group-hover:text-slate-600 tracking-wider">Akses Cepat</span>
+      </button>
+    </div>
   </div>
 
   <!-- ================= MODALS & POPUPS ================= -->
@@ -361,9 +372,16 @@
         </div>
 
         <!-- iOS/iPhone Instructions -->
-        <div class="p-3 bg-slate-50 rounded-2xl border border-slate-100 space-y-1.5">
-          <h5 class="font-bold text-slate-800 flex items-center gap-1.5">🍎 Pada iPhone (Safari):</h5>
-          <p>Ketuk tombol **Berbagi (Share)** di bagian bawah Safari, lalu pilih **Tambahkan ke Layar Utama**.</p>
+        <div class="p-3.5 bg-blue-50/70 rounded-2xl border border-blue-100 space-y-2">
+          <h5 class="font-bold text-blue-950 text-xs flex items-center gap-1.5">
+            <span>🍎</span> Pada iPhone / iPad (Safari):
+          </h5>
+          <ol class="list-decimal list-inside space-y-1 text-[11px] text-blue-900 leading-normal pl-1">
+            <li>Buka website ini melalui browser <strong>Safari</strong> di iPhone Anda.</li>
+            <li>Ketuk tombol <strong>Bagikan (Share)</strong> <svg class="w-3.5 h-3.5 inline text-blue-600" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg> di bilah bawah layar.</li>
+            <li>Gulir ke bawah dan pilih <strong>"Tambah ke Layar Utama"</strong> (<em>Add to Home Screen</em> ➕).</li>
+            <li>Ketuk <strong>"Tambah"</strong> di pojok kanan atas. Ikon aplikasi Hibatullah akan langsung terpasang di layar iPhone Anda!</li>
+          </ol>
         </div>
       </div>
       
