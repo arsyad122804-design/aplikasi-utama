@@ -485,9 +485,23 @@
       }
     }
 
-    // ================= CALENDER LOGIC =================
-    let currentYear = 2026;
-    let currentMonth = 7; // August (0-indexed: 7)
+    // ================= CALENDER LOGIC (DYNAMIC REAL-TIME) =================
+    const todayReal = new Date();
+    let currentYear = todayReal.getFullYear();
+    let currentMonth = todayReal.getMonth(); // 0-indexed (0=Jan, 8=Sep, etc.)
+
+    // Known national and religious holidays mapped for dynamic rendering
+    const holidayDates = {
+      "2026-03-20": "Hari Raya Idul Fitri 1447 H",
+      "2026-03-21": "Hari Raya Idul Fitri 1447 H",
+      "2026-05-01": "Hari Buruh Internasional",
+      "2026-05-27": "Hari Raya Idul Adha 1447 H",
+      "2026-06-01": "Hari Lahir Pancasila",
+      "2026-06-16": "Tahun Baru Islam 1448 H",
+      "2026-08-17": "Hari Kemerdekaan RI",
+      "2026-08-25": "Maulid Nabi Muhammad SAW",
+      "2026-12-25": "Hari Raya Natal"
+    };
 
     function renderCalendarDays() {
       const daysContainer = document.getElementById('mini-calendar-days');
@@ -507,7 +521,7 @@
 
       const firstDay = new Date(currentYear, currentMonth, 1);
       let startDayOfWeek = firstDay.getDay(); // 0 = Sun
-      let indStartDay = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1; // 0 = Mon
+      let indStartDay = startDayOfWeek === 0 ? 6 : startDayOfWeek - 1; // 0 = Mon (S S R K J S M)
 
       const totalDays = new Date(currentYear, currentMonth + 1, 0).getDate();
 
@@ -516,13 +530,21 @@
         daysHtml += `<span></span>`;
       }
 
+      const now = new Date();
+      const isThisMonth = currentYear === now.getFullYear() && currentMonth === now.getMonth();
+      const todayNum = now.getDate();
+
       for (let day = 1; day <= totalDays; day++) {
-        const isToday = currentYear === 2026 && currentMonth === 7 && day === 29;
-        const isHoliday = currentYear === 2026 && currentMonth === 7 && (day === 17 || day === 25);
+        const isToday = isThisMonth && (day === todayNum);
+
+        const mKey = String(currentMonth + 1).padStart(2, '0');
+        const dKey = String(day).padStart(2, '0');
+        const fullDateKey = `${currentYear}-${mKey}-${dKey}`;
+        const isHoliday = !!holidayDates[fullDateKey];
 
         let activeClass = 'w-7 h-7 flex items-center justify-center mx-auto text-slate-700 font-semibold rounded-full hover:bg-slate-100 transition';
         if (isToday) {
-          activeClass = 'bg-blue-600 text-white rounded-full font-bold flex items-center justify-center w-7 h-7 mx-auto shadow-sm';
+          activeClass = 'bg-blue-600 text-white rounded-full font-bold flex items-center justify-center w-7 h-7 mx-auto shadow-sm ring-2 ring-blue-300/60';
         } else if (isHoliday) {
           activeClass = 'bg-rose-500 text-white rounded-full font-bold flex items-center justify-center w-7 h-7 mx-auto shadow-sm';
         }
