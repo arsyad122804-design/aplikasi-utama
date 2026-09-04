@@ -604,6 +604,60 @@
         </div>
       </form>
     </div>
+  <!-- Employee Action Modal (Opened when clicking three-dots ⋮ button) -->
+  <div id="emp-action-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 hidden">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-3xl p-6 shadow-2xl space-y-4 text-left animate-fadeIn">
+      <!-- Employee Profile Header -->
+      <div class="flex items-center justify-between border-b pb-4">
+        <div class="flex items-center gap-3">
+          <div id="emp-modal-avatar" class="w-12 h-12 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-base shadow-sm flex-shrink-0">
+            UA
+          </div>
+          <div>
+            <h4 id="emp-modal-name" class="font-bold text-slate-800 text-sm">Ustadz Arsyad</h4>
+            <p id="emp-modal-role" class="text-[11px] text-slate-400">Guru & Akademik • Divisi Sekolah</p>
+          </div>
+        </div>
+        <button onclick="closeEmpActionModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <!-- Action Buttons List -->
+      <div class="space-y-2 pt-1">
+        <button onclick="applyEmpAction('aktif')" class="w-full p-3.5 bg-slate-50 hover:bg-emerald-50 text-slate-800 hover:text-emerald-700 rounded-2xl border border-slate-100 transition flex items-center justify-between font-bold text-xs">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🟢</span> Set Status Aktif
+          </span>
+          <span class="text-[10px] font-semibold text-slate-400">Status Aktif</span>
+        </button>
+
+        <button onclick="applyEmpAction('cuti')" class="w-full p-3.5 bg-slate-50 hover:bg-amber-50 text-slate-800 hover:text-amber-700 rounded-2xl border border-slate-100 transition flex items-center justify-between font-bold text-xs">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🟡</span> Set Status Cuti
+          </span>
+          <span class="text-[10px] font-semibold text-slate-400">Izin / Cuti</span>
+        </button>
+
+        <button onclick="applyEmpAction('nonaktif')" class="w-full p-3.5 bg-slate-50 hover:bg-rose-50 text-slate-800 hover:text-rose-700 rounded-2xl border border-slate-100 transition flex items-center justify-between font-bold text-xs">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🔴</span> Nonaktifkan Karyawan
+          </span>
+          <span class="text-[10px] font-semibold text-slate-400">Nonaktif</span>
+        </button>
+
+        <button onclick="applyEmpAction('hapus')" class="w-full p-3.5 bg-rose-50/80 hover:bg-rose-100 text-rose-600 rounded-2xl border border-rose-100 transition flex items-center justify-between font-bold text-xs mt-2">
+          <span class="flex items-center gap-2.5">
+            <span class="text-base">🗑️</span> Hapus Karyawan
+          </span>
+          <span class="text-[10px] font-bold text-rose-500">Hapus Data</span>
+        </button>
+      </div>
+
+      <button onclick="closeEmpActionModal()" class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-xl text-xs transition mt-2">
+        Batal
+      </button>
+    </div>
   </div>
 
 
@@ -1038,7 +1092,7 @@
         const initials = emp.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
         return `
-          <div class="p-4 flex items-center justify-between hover:bg-slate-50/60 transition text-left relative">
+          <div class="p-4 flex items-center justify-between hover:bg-slate-50/60 transition text-left">
             <div class="flex items-center gap-3">
               <div class="w-11 h-11 rounded-full ${emp.avatarBg || 'bg-blue-600'} text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
                 ${initials}
@@ -1049,85 +1103,67 @@
               </div>
             </div>
 
-            <div class="flex items-center gap-3 relative">
+            <div class="flex items-center gap-3">
               ${statusBadge}
 
-              <!-- Three dots action button -->
-              <div class="relative">
-                <button onclick="toggleEmployeeActionMenu('${emp.id}', event)" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
-                  </svg>
-                </button>
-
-                <!-- Dropdown Popup Menu -->
-                <div id="emp-menu-${emp.id}" class="hidden absolute right-0 top-10 w-44 bg-white rounded-2xl shadow-xl border border-slate-100 z-50 py-1.5 divide-y divide-slate-100 animate-fadeIn">
-                  <div class="py-1">
-                    <button onclick="updateEmployeeStatus('${emp.id}', 'aktif')" class="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium">
-                      <span>🟢</span> Set Status Aktif
-                    </button>
-                    <button onclick="updateEmployeeStatus('${emp.id}', 'cuti')" class="w-full text-left px-3.5 py-2 text-xs text-amber-700 hover:bg-amber-50 flex items-center gap-2 font-medium">
-                      <span>🟡</span> Set Status Cuti
-                    </button>
-                    <button onclick="updateEmployeeStatus('${emp.id}', 'nonaktif')" class="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium">
-                      <span>🔴</span> Nonaktifkan
-                    </button>
-                  </div>
-                  <div class="py-1">
-                    <button onclick="deleteEmployee('${emp.id}')" class="w-full text-left px-3.5 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-bold">
-                      <span>🗑️</span> Hapus Karyawan
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <!-- Three dots action button matching screenshot -->
+              <button onclick="openEmpActionModal('${emp.id}')" class="w-9 h-9 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:text-slate-800 hover:bg-slate-100 transition shadow-sm flex-shrink-0" title="Pilihan Aksi Menu">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
+                </svg>
+              </button>
             </div>
           </div>
         `;
       }).join('');
     }
 
-    function toggleEmployeeActionMenu(empId, event) {
-      event.stopPropagation();
-      const targetMenu = document.getElementById(`emp-menu-${empId}`);
-      
-      // Close any other open popup menus
-      if (state.employees) {
-        state.employees.forEach(emp => {
-          const m = document.getElementById(`emp-menu-${emp.id}`);
-          if (m && emp.id !== empId) m.classList.add('hidden');
-        });
-      }
+    let selectedEmpId = null;
 
-      if (targetMenu) {
-        targetMenu.classList.toggle('hidden');
+    function openEmpActionModal(empId) {
+      selectedEmpId = empId;
+      const emp = state.employees.find(e => e.id === empId);
+      if (!emp) return;
+
+      const initials = emp.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      const avatarEl = document.getElementById('emp-modal-avatar');
+      const nameEl = document.getElementById('emp-modal-name');
+      const roleEl = document.getElementById('emp-modal-role');
+
+      if (avatarEl) {
+        avatarEl.className = `w-12 h-12 rounded-full ${emp.avatarBg || 'bg-blue-600'} text-white flex items-center justify-center font-bold text-base shadow-sm flex-shrink-0`;
+        avatarEl.innerText = initials;
       }
+      if (nameEl) nameEl.innerText = emp.name;
+      if (roleEl) roleEl.innerText = `${emp.role} • ${emp.division}`;
+
+      const modal = document.getElementById('emp-action-modal');
+      if (modal) modal.classList.remove('hidden');
     }
 
-    // Close action popup menus when clicking anywhere outside
-    document.addEventListener('click', () => {
-      if (state.employees) {
-        state.employees.forEach(emp => {
-          const m = document.getElementById(`emp-menu-${emp.id}`);
-          if (m) m.classList.add('hidden');
-        });
-      }
-    });
-
-    function updateEmployeeStatus(empId, newStatus) {
-      const emp = state.employees.find(e => e.id === empId);
-      if (emp) {
-        emp.status = newStatus;
-        save.employees();
-        renderEmployees();
-      }
+    function closeEmpActionModal() {
+      const modal = document.getElementById('emp-action-modal');
+      if (modal) modal.classList.add('hidden');
+      selectedEmpId = null;
     }
 
-    function deleteEmployee(empId) {
-      const emp = state.employees.find(e => e.id === empId);
-      if (emp && confirm(`Apakah Anda yakin ingin menghapus "${emp.name}" dari data karyawan?`)) {
-        state.employees = state.employees.filter(e => e.id !== empId);
+    function applyEmpAction(action) {
+      if (!selectedEmpId) return;
+      const emp = state.employees.find(e => e.id === selectedEmpId);
+      if (!emp) return;
+
+      if (action === 'hapus') {
+        if (confirm(`Apakah Anda yakin ingin menghapus "${emp.name}" dari data karyawan?`)) {
+          state.employees = state.employees.filter(e => e.id !== selectedEmpId);
+          save.employees();
+          renderEmployees();
+          closeEmpActionModal();
+        }
+      } else {
+        emp.status = action; // 'aktif', 'cuti', 'nonaktif'
         save.employees();
         renderEmployees();
+        closeEmpActionModal();
       }
     }
 
