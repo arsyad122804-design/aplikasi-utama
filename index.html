@@ -292,6 +292,115 @@
           <div class="p-3.5 bg-slate-50/70 rounded-2xl border border-slate-100 text-xs text-slate-700 leading-relaxed">
             Alhamdulillah, bug rekam absen pulang sudah berhasil diperbaiki dan fitur dapat digunakan kembali dengan lancar oleh seluruh pengguna.
           </div>
+      <!-- ================= KONFIGURASI JAM KERJA DIVISI ================= -->
+      <div id="work-hours-section" class="space-y-4 w-full pt-2 text-left">
+        <div>
+          <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+            <span>⏰</span> Konfigurasi Jam Kerja Divisi
+          </h3>
+          <p class="text-[11px] text-slate-500 mt-0.5">Sesuaikan jam masuk dan pulang untuk masing-masing divisi agar absensi tercatat dengan akurat.</p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- 1. Divisi Operasional (Admin & Staff) -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/60 shadow-sm space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+              <h4 class="font-bold text-slate-800 text-xs md:text-sm">Divisi Operasional (Admin & Staff)</h4>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-1">Jam Masuk</label>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700">
+                  <span>07:05 AM</span>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-1">Jam Pulang</label>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700">
+                  <span>03:00 PM</span>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Divisi Sekolah (Guru & Akademik) -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/60 shadow-sm space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+              <h4 class="font-bold text-slate-800 text-xs md:text-sm">Divisi Sekolah (Guru & Akademik)</h4>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-1">Jam Masuk</label>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700">
+                  <span>07:05 AM</span>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-500 mb-1">Jam Pulang</label>
+                <div class="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 flex items-center justify-between text-xs font-semibold text-slate-700">
+                  <span>03:00 PM</span>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Divisi Kepesantrenan (Pengasuh & Ustadz - Split Shift) -->
+          <div class="bg-white p-5 rounded-3xl border border-slate-200/60 shadow-sm space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+              <h4 class="font-bold text-slate-800 text-xs md:text-sm">Divisi Kepesantrenan (Pengasuh & Ustadz - Split Shift)</h4>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- Sesi 1 -->
+              <div class="space-y-2">
+                <span class="text-[11px] font-bold text-slate-600 block">Sesi 1 (Pagi - Siang)</span>
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Jam Masuk 1</label>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 flex items-center justify-between text-xs font-semibold text-slate-700">
+                      <span>04:30 AM</span>
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Jam Pulang 1</label>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 flex items-center justify-between text-xs font-semibold text-slate-700">
+                      <span>07:30 AM</span>
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Sesi 2 -->
+              <div class="space-y-2">
+                <span class="text-[11px] font-bold text-slate-600 block">Sesi 2 (Sore - Malam)</span>
+                <div class="grid grid-cols-2 gap-2.5">
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Jam Masuk 2</label>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 flex items-center justify-between text-xs font-semibold text-slate-700">
+                      <span>05:00 PM</span>
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                  </div>
+                  <div>
+                    <label class="block text-[10px] font-bold text-slate-400 mb-1">Jam Pulang 2</label>
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 flex items-center justify-between text-xs font-semibold text-slate-700">
+                      <span>09:00 PM</span>
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div class="bg-indigo-50/50 border border-indigo-100/60 rounded-3xl p-4 md:p-5 flex flex-col md:flex-row items-center justify-between gap-3 mt-4 w-full text-left">
