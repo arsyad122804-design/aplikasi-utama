@@ -402,6 +402,24 @@
             </div>
           </div>
         </div>
+      <!-- ================= MANAJEMEN TIM & KARYAWAN (MANAGER) ================= -->
+      <div id="team-management-section" class="space-y-4 w-full pt-2 text-left">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
+              <span>👥</span> Manajemen Tim & Karyawan
+            </h3>
+            <p class="text-[11px] text-slate-500 mt-0.5">Kelola status kepegawaian, atur cuti, nonaktifkan, atau hapus data anggota tim & guru.</p>
+          </div>
+          <button onclick="openAddEmployeeModal()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-3.5 py-2 rounded-xl shadow-sm transition flex items-center gap-1.5 flex-shrink-0">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+            <span>Tambah</span>
+          </button>
+        </div>
+
+        <div class="bg-white rounded-3xl border border-slate-200/60 shadow-sm overflow-visible divide-y divide-slate-100" id="employee-list-container">
+          <!-- Rendered dynamically via JS -->
+        </div>
       </div>
       <div class="bg-indigo-50/50 border border-indigo-100/60 rounded-3xl p-4 md:p-5 flex flex-col md:flex-row items-center justify-between gap-3 mt-4 w-full text-left">
         <div class="flex items-center gap-3">
@@ -546,6 +564,45 @@
       <button onclick="closeInstallGuide()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition">
         Mengerti
       </button>
+  <!-- Add Employee Modal -->
+  <div id="add-employee-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-4 text-left">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">➕ Tambah Anggota Tim / Karyawan</h3>
+        <button onclick="closeAddEmployeeModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <form onsubmit="handleAddEmployeeSubmit(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Nama Lengkap</label>
+          <input type="text" id="new-emp-name" required placeholder="Contoh: Ustadz Ahmad, S.Pd" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Jabatan / Role</label>
+          <input type="text" id="new-emp-role" required placeholder="Contoh: Guru Agama / Staff Admin" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Divisi Kerja</label>
+          <select id="new-emp-division" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="Divisi Sekolah">Divisi Sekolah (Guru & Akademik)</option>
+            <option value="Divisi Operasional">Divisi Operasional (Admin & Staff)</option>
+            <option value="Divisi Kepesantrenan">Divisi Kepesantrenan (Pengasuh & Ustadz)</option>
+          </select>
+        </div>
+
+        <div class="pt-2 flex items-center gap-3">
+          <button type="button" onclick="closeAddEmployeeModal()" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl text-xs transition">
+            Batal
+          </button>
+          <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2.5 rounded-xl text-xs shadow-md transition">
+            Simpan Karyawan
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -639,6 +696,7 @@
     function backToDashboard() {
       document.getElementById('dashboard-view').classList.remove('hidden');
       renderJadwalPage();
+      renderEmployees();
     }
 
     // ================= TAB SWITCHING =================
@@ -943,6 +1001,173 @@
         const el = document.getElementById('dashboard-view');
         if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    }
+
+    // ================= MANAJEMEN TIM & KARYAWAN LOGIC =================
+    const initialEmployees = [
+      { id: 'emp_1', name: 'Ustadz Arsyad', role: 'Guru & Akademik', division: 'Divisi Sekolah', status: 'aktif', avatarBg: 'bg-blue-600' },
+      { id: 'emp_2', name: 'Ahmad Fauzi, S.Pd', role: 'Staff Administrasi', division: 'Divisi Operasional', status: 'aktif', avatarBg: 'bg-amber-600' },
+      { id: 'emp_3', name: 'Siti Nurhaliza, M.Pd', role: 'Pengasuh Santri', division: 'Divisi Kepesantrenan', status: 'cuti', avatarBg: 'bg-emerald-600' },
+      { id: 'emp_4', name: 'Budi Santoso, S.Kom', role: 'Staff IT & Media', division: 'Divisi Operasional', status: 'nonaktif', avatarBg: 'bg-slate-600' }
+    ];
+
+    state.employees = JSON.parse(localStorage.getItem('hib_employees')) || initialEmployees;
+    if (!save.employees) {
+      save.employees = function() { localStorage.setItem('hib_employees', JSON.stringify(state.employees)); };
+    }
+
+    function renderEmployees() {
+      const container = document.getElementById('employee-list-container');
+      if (!container) return;
+
+      if (state.employees.length === 0) {
+        container.innerHTML = `<div class="p-8 text-center text-slate-400 text-xs">Belum ada data karyawan. Ketuk "Tambah" untuk menambahkan anggota tim baru.</div>`;
+        return;
+      }
+
+      container.innerHTML = state.employees.map(emp => {
+        let statusBadge = '';
+        if (emp.status === 'aktif') {
+          statusBadge = '<span class="text-[9px] font-bold px-2.5 py-1 rounded-full text-emerald-600 bg-emerald-50 border border-emerald-100">🟢 Aktif</span>';
+        } else if (emp.status === 'cuti') {
+          statusBadge = '<span class="text-[9px] font-bold px-2.5 py-1 rounded-full text-amber-600 bg-amber-50 border border-amber-100">🟡 Cuti</span>';
+        } else {
+          statusBadge = '<span class="text-[9px] font-bold px-2.5 py-1 rounded-full text-rose-600 bg-rose-50 border border-rose-100">🔴 Nonaktif</span>';
+        }
+
+        const initials = emp.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+
+        return `
+          <div class="p-4 flex items-center justify-between hover:bg-slate-50/60 transition text-left relative">
+            <div class="flex items-center gap-3">
+              <div class="w-11 h-11 rounded-full ${emp.avatarBg || 'bg-blue-600'} text-white flex items-center justify-center font-bold text-sm shadow-sm flex-shrink-0">
+                ${initials}
+              </div>
+              <div>
+                <h5 class="font-bold text-slate-800 text-xs md:text-sm leading-snug">${escapeHtml(emp.name)}</h5>
+                <p class="text-[10px] text-slate-400 mt-0.5">${escapeHtml(emp.role)} • <span class="text-slate-500 font-medium">${escapeHtml(emp.division)}</span></p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 relative">
+              ${statusBadge}
+
+              <!-- Three dots action button -->
+              <div class="relative">
+                <button onclick="toggleEmployeeActionMenu('${emp.id}', event)" class="p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-full transition">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"/>
+                  </svg>
+                </button>
+
+                <!-- Dropdown Popup Menu -->
+                <div id="emp-menu-${emp.id}" class="hidden absolute right-0 top-10 w-44 bg-white rounded-2xl shadow-xl border border-slate-100 z-50 py-1.5 divide-y divide-slate-100 animate-fadeIn">
+                  <div class="py-1">
+                    <button onclick="updateEmployeeStatus('${emp.id}', 'aktif')" class="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium">
+                      <span>🟢</span> Set Status Aktif
+                    </button>
+                    <button onclick="updateEmployeeStatus('${emp.id}', 'cuti')" class="w-full text-left px-3.5 py-2 text-xs text-amber-700 hover:bg-amber-50 flex items-center gap-2 font-medium">
+                      <span>🟡</span> Set Status Cuti
+                    </button>
+                    <button onclick="updateEmployeeStatus('${emp.id}', 'nonaktif')" class="w-full text-left px-3.5 py-2 text-xs text-slate-700 hover:bg-slate-50 flex items-center gap-2 font-medium">
+                      <span>🔴</span> Nonaktifkan
+                    </button>
+                  </div>
+                  <div class="py-1">
+                    <button onclick="deleteEmployee('${emp.id}')" class="w-full text-left px-3.5 py-2 text-xs text-rose-600 hover:bg-rose-50 flex items-center gap-2 font-bold">
+                      <span>🗑️</span> Hapus Karyawan
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleEmployeeActionMenu(empId, event) {
+      event.stopPropagation();
+      const targetMenu = document.getElementById(`emp-menu-${empId}`);
+      
+      // Close any other open popup menus
+      if (state.employees) {
+        state.employees.forEach(emp => {
+          const m = document.getElementById(`emp-menu-${emp.id}`);
+          if (m && emp.id !== empId) m.classList.add('hidden');
+        });
+      }
+
+      if (targetMenu) {
+        targetMenu.classList.toggle('hidden');
+      }
+    }
+
+    // Close action popup menus when clicking anywhere outside
+    document.addEventListener('click', () => {
+      if (state.employees) {
+        state.employees.forEach(emp => {
+          const m = document.getElementById(`emp-menu-${emp.id}`);
+          if (m) m.classList.add('hidden');
+        });
+      }
+    });
+
+    function updateEmployeeStatus(empId, newStatus) {
+      const emp = state.employees.find(e => e.id === empId);
+      if (emp) {
+        emp.status = newStatus;
+        save.employees();
+        renderEmployees();
+      }
+    }
+
+    function deleteEmployee(empId) {
+      const emp = state.employees.find(e => e.id === empId);
+      if (emp && confirm(`Apakah Anda yakin ingin menghapus "${emp.name}" dari data karyawan?`)) {
+        state.employees = state.employees.filter(e => e.id !== empId);
+        save.employees();
+        renderEmployees();
+      }
+    }
+
+    function openAddEmployeeModal() {
+      const modal = document.getElementById('add-employee-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeAddEmployeeModal() {
+      const modal = document.getElementById('add-employee-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function handleAddEmployeeSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('new-emp-name').value.trim();
+      const role = document.getElementById('new-emp-role').value.trim();
+      const division = document.getElementById('new-emp-division').value;
+
+      if (!name || !role) return;
+
+      const colors = ['bg-blue-600', 'bg-emerald-600', 'bg-purple-600', 'bg-amber-600', 'bg-rose-600', 'bg-indigo-600'];
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+
+      const newEmp = {
+        id: 'emp_' + Date.now(),
+        name: name,
+        role: role,
+        division: division,
+        status: 'aktif',
+        avatarBg: randomColor
+      };
+
+      state.employees.unshift(newEmp);
+      save.employees();
+      renderEmployees();
+      closeAddEmployeeModal();
+
+      document.getElementById('new-emp-name').value = '';
+      document.getElementById('new-emp-role').value = '';
     }
 
     // ================= HELPERS =================
