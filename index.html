@@ -267,69 +267,7 @@
         </div>
       </div>
 
-      <!-- ================= BERITA UPDATE APLIKASI SECTION ================= -->
-      <div id="app-updates-section" class="space-y-4 w-full pt-2 text-left">
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm md:text-base font-bold text-slate-800 flex items-center gap-2">
-            <span>📢</span> Berita Update Aplikasi
-          </h3>
-          <span class="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
-            Versi v2.1 (Terbaru)
-          </span>
-        </div>
 
-        <div class="bg-white rounded-3xl p-5 border border-slate-200/60 shadow-sm space-y-4">
-          <!-- Update Header Info -->
-          <div class="flex items-start justify-between border-b border-slate-100 pb-3.5">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold text-lg flex-shrink-0">
-                ✅
-              </div>
-              <div>
-                <h4 class="font-bold text-slate-800 text-xs md:text-sm">Perbaikan Fitur Rekam Absen Pulang</h4>
-                <p class="text-[10px] text-slate-400 mt-0.5">Rilis: 4 September 2026</p>
-              </div>
-            </div>
-            <button onclick="toggleUpdateModal()" class="text-xs font-bold text-blue-600 hover:underline flex items-center gap-1">
-              <span>Detail</span>
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-
-          <!-- Platform-Specific Updates Summary Cards -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <!-- Android Card -->
-            <div class="bg-emerald-50/50 border border-emerald-100 rounded-2xl p-3.5 space-y-1.5">
-              <div class="flex items-center gap-2 text-emerald-800 font-bold text-xs">
-                <span>🤖</span> User Android (HP)
-              </div>
-              <p class="text-[10px] text-slate-600 leading-relaxed">
-                Alhamdulillah, bug rekam absen pulang sudah berhasil diperbaiki dan dapat digunakan dengan lancar.
-              </p>
-            </div>
-
-            <!-- Apple / iPhone Card -->
-            <div class="bg-blue-50/50 border border-blue-100 rounded-2xl p-3.5 space-y-1.5">
-              <div class="flex items-center gap-2 text-blue-900 font-bold text-xs">
-                <span>🍎</span> User iPhone / iPad (Apple)
-              </div>
-              <p class="text-[10px] text-slate-600 leading-relaxed">
-                Fitur rekam absen pulang kini sudah berjalan lancar, normal, dan stabil di Safari iOS.
-              </p>
-            </div>
-
-            <!-- Laptop/PC Card -->
-            <div class="bg-purple-50/50 border border-purple-100 rounded-2xl p-3.5 space-y-1.5">
-              <div class="flex items-center gap-2 text-purple-900 font-bold text-xs">
-                <span>💻</span> User Laptop / PC
-              </div>
-              <p class="text-[10px] text-slate-600 leading-relaxed">
-                Perbaikan rekam absen pulang & sistem optimasi aplikasi telah aktif untuk semua perangkat.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!-- ================= INSTALL APP BANNER ================= -->
       <div class="bg-indigo-50/50 border border-indigo-100/60 rounded-3xl p-4 md:p-5 flex flex-col md:flex-row items-center justify-between gap-3 mt-4 w-full text-left">
@@ -478,52 +416,7 @@
     </div>
   </div>
 
-  <!-- App Update Details Modal -->
-  <div id="update-details-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-4 text-left">
-      <div class="flex items-center justify-between border-b pb-3">
-        <h3 class="font-bold text-slate-800 text-base flex items-center gap-2">📢 Rincian Update Aplikasi v2.1</h3>
-        <button onclick="toggleUpdateModal()" class="text-slate-400 hover:text-slate-600 p-1">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-        </button>
-      </div>
-      
-      <div class="space-y-3.5 text-xs text-slate-600 leading-relaxed">
-        <div class="p-3 bg-emerald-50/70 rounded-2xl border border-emerald-100">
-          <p class="font-bold text-emerald-900 text-xs">✅ Perbaikan Utama: Bug Rekam Absen Pulang</p>
-          <p class="text-[10px] text-emerald-800/80 mt-0.5">Alhamdulillah! Masalah kendala rekam absen pulang telah berhasil diperbaiki secara menyeluruh untuk semua pengguna.</p>
-        </div>
 
-        <div class="space-y-2">
-          <h5 class="font-bold text-slate-800 flex items-center gap-1.5">🤖 1. Pengguna Android (Smartphone):</h5>
-          <ul class="list-disc list-inside text-[11px] space-y-1 text-slate-600 pl-1">
-            <li>Fitur rekam absen pulang kini berjalan lancar dan otomatis.</li>
-            <li>Bottom Navigation Bar presisi (Beranda & Akses Cepat).</li>
-            <li>Akses PWA offline lebih cepat dan ringan dengan Service Worker v33.</li>
-          </ul>
-        </div>
-
-        <div class="space-y-2">
-          <h5 class="font-bold text-slate-800 flex items-center gap-1.5">🍎 2. Pengguna iPhone / iPad (Apple iOS):</h5>
-          <ul class="list-disc list-inside text-[11px] space-y-1 text-slate-600 pl-1">
-            <li>Fitur rekam absen pulang sudah stabil di Safari iOS.</li>
-            <li>Dukungan Apple Touch Icon dan Safe Area Inset sempurna.</li>
-          </ul>
-        </div>
-
-        <div class="space-y-2">
-          <h5 class="font-bold text-slate-800 flex items-center gap-1.5">💻 3. Pengguna Laptop / Komputer:</h5>
-          <ul class="list-disc list-inside text-[11px] space-y-1 text-slate-600 pl-1">
-            <li>Rekam absen pulang & tampilan desktop responsif berjalan normal.</li>
-          </ul>
-        </div>
-      </div>
-      
-      <button onclick="toggleUpdateModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-md transition">
-        Saya Mengerti
-      </button>
-    </div>
-  </div>
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
@@ -816,11 +709,7 @@
       modal.classList.toggle('hidden');
     }
 
-    // ================= APP UPDATE MODAL TOGGLE =================
-    function toggleUpdateModal() {
-      const modal = document.getElementById('update-details-modal');
-      if (modal) modal.classList.toggle('hidden');
-    }
+
 
     // ================= STICKY NAVIGATION CLICKS =================
     function clickNav(navId) {
